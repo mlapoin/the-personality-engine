@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics: replace G-XXXXXXXXXX with your own measurement ID, or delete this block -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <meta charset="UTF-8" />
+  <meta property="og:site_name" content="Personality Engine" />
+  <meta property="og:image" content="preview.jpg" />
+  <meta property="twitter:image" content="preview.jpg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta name="description" content="Come find out which story trope you and another user resemble." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What's the Dynamic? — Personality Engine</title>
+  <meta property="og:title" content="What's the Dynamic? — Personality Engine" />
+  <meta property="og:description" content="Come find out which story trope you and another user resemble." />
+  <meta name="twitter:title" content="What's the Dynamic? — Personality Engine" />
+  <meta name="twitter:description" content="Come find out which story trope you and another user resemble." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23c0001a%22/></svg>" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f5f0e8; color: #111; font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1.25rem; }
+    .container { width: 100%; max-width: 540px; display: flex; flex-direction: column; text-align: center; }
+    .masthead { border-top: 4px solid #111; border-bottom: 1.5px solid #111; padding: 0.6rem 0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .masthead-left { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: #555; letter-spacing: 0.1em; }
+    .masthead-right { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: #111; letter-spacing: 0.1em; text-decoration: none; border: 1px solid #111; padding: 3px 8px; }
+    .masthead-right:hover { color: #c0001a; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 13vw, 6.5rem); font-weight: 900; line-height: 0.88; letter-spacing: -0.02em; color: #111; border-bottom: 1.5px solid #111; padding-bottom: 1rem; margin-bottom: 1rem; }
+    h1 em { font-style: italic; }
+    .deck { font-size: 0.8rem; color: #444; border-bottom: 1px solid #ccc; padding-bottom: 1rem; margin-bottom: 1.25rem; line-height: 1.5; }
+    .input-area { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; align-items: center; }
+    .input-row { display: flex; width: 100%; }
+    .at-sign { background: #111; color: #f5f0e8; font-family: 'DM Mono', monospace; font-size: 1rem; padding: 0 0.75rem; display: flex; align-items: center; border: 2px solid #111; }
+    input { flex: 1; background: white; border: 2px solid #111; border-left: none; outline: none; color: #111; font-family: 'DM Mono', monospace; font-size: 1rem; padding: 0.85rem 1rem; }
+    input::placeholder { color: #aaa; }
+    .input-area button { width: 100%; background: #111; color: #f5f0e8; border: 2px solid #111; font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 900; font-style: normal; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.9rem; cursor: pointer; transition: background 0.15s; }
+    .input-area button:hover { background: #333; }
+    .input-area button:active { background: #555; }
+    .result { display: none; flex-direction: column; animation: fadeIn 0.3s ease both; border-top: 4px solid #111; padding-top: 1rem; }
+    .result.show { display: flex; }
+    .result-byline { font-family: 'DM Sans', monospace; font-size: 0.85rem; color: #222; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .verdict-text { font-family: 'DM Sans', sans-serif; font-size: clamp(1rem, 4vw, 1.2rem); font-weight: 400; line-height: 1.6; padding-bottom: 1rem; }
+    .verdict-text .username { font-weight: 700; }
+    .verdict-text .keyword { color: #c0001a; font-weight: 700; font-style: normal; }
+    .btn-row { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-top: 1.75rem; }
+    .share-btn { display: none; background: #1d9bf0; color: white; border: none; font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.7rem 1.1rem; cursor: pointer; transition: background 0.15s; text-decoration: none; }
+    .share-btn:hover { background: #1a8cd8; }
+    .share-btn.show { display: inline-block; }
+    .save-btn { display: none; background: #111; color: #f5f0e8; border: none; font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.7rem 1.1rem; cursor: pointer; transition: background 0.15s; }
+    .save-btn:hover { background: #333; }
+    .save-btn.show { display: inline-block; }
+    footer { margin-top: 1.25rem; border-top: 1px solid #ccc; padding-top: 0.75rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #aaa; letter-spacing: 0.08em; display: flex; justify-content: space-between; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    #share-card { position: fixed; left: -9999px; top: 0; width: 540px; background: #f5f0e8; padding: 2rem 1.5rem; }
+    #share-card .sc-masthead { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+    #share-card .sc-masthead .sc-rule { flex: 1; height: 1px; background: #111; }
+    #share-card .sc-masthead span { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: #111; letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; }
+    #share-card .sc-body { border-top: 4px solid #111; padding-top: 1rem; }
+    #share-card .sc-question { font-family: 'DM Mono', monospace; font-size: 10px; color: #777; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    #share-card .sc-question .sc-user { color: #111; font-weight: 700; }
+    #share-card .sc-divider { height: 1px; background: #ccc; margin: 0.6rem 0; }
+    #share-card .sc-verdict { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 400; line-height: 1.6; color: #111; }
+    #share-card .sc-verdict .sc-user { font-weight: 700; }
+    #share-card .sc-verdict .sc-kw { color: #c0001a; font-weight: 700; }
+    #share-card .sc-footer { margin-top: 1.5rem; border-top: 1px solid #ccc; padding-top: 0.6rem; display: flex; justify-content: space-between; }
+    #share-card .sc-footer span { font-family: 'DM Mono', monospace; font-size: 8px; color: #aaa; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="masthead">
+      <span class="masthead-left">EST. 2026</span>
+      <a class="masthead-right" href="index.html">← ALL TESTS</a>
+    </div>
+    <h1>What's the<br><em>Dynamic?</em></h1>
+    <p class="deck">Enter two X usernames below. Let's find out which popular story trope you two would be.</p>
+    <div class="input-area">
+      <div class="input-row">
+        <span class="at-sign">@</span>
+        <input type="text" id="user1" placeholder="username" maxlength="30" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="input-row">
+        <span class="at-sign">@</span>
+        <input type="text" id="user2" placeholder="username" maxlength="30" autocomplete="off" spellcheck="false" />
+      </div>
+      <button onclick="analyze()">Diagnose</button>
+    </div>
+    <div class="result" id="result">
+      <p class="result-byline">Trope for <span id="resultUsers"></span></p>
+      <div class="verdict-text" id="verdictText"></div>
+      <div class="btn-row">
+        <a class="share-btn" id="shareBtn" href="#" target="_blank">Share on X &rarr;</a>
+        <button class="save-btn" id="saveBtn" onclick="saveCard()">Save as Image &darr;</button>
+      </div>
+    </div>
+    <footer><span>&copy; 2026</span><span>NOT AFFILIATED WITH X/TWITTER</span></footer>
+  </div>
+
+  <div id="share-card">
+    <div class="sc-masthead">
+      <div class="sc-rule"></div>
+      <span>Personality Engine</span>
+      <div class="sc-rule"></div>
+    </div>
+    <div class="sc-body">
+      <div class="sc-question" id="sc-question"></div>
+      <div class="sc-divider"></div>
+      <div class="sc-verdict" id="sc-verdict"></div>
+    </div>
+    <div class="sc-footer">
+      <span>&copy; 2026</span>
+      <span class="sc-site"></span>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    document.getElementById('user1').addEventListener('keydown', e => { if (e.key === 'Enter') analyze(); });
+    document.getElementById('user2').addEventListener('keydown', e => { if (e.key === 'Enter') analyze(); });
+
+    function hash(str) { let h = 0; for (let i = 0; i < str.length; i++) { h = Math.imul(31, h) + str.charCodeAt(i) | 0; } return Math.abs(h); }
+    // Site address for share links and the saved image, so nothing is hard-coded
+    const SITE = location.origin + location.pathname.replace(/[^/]*$/, '');
+    // Opened as a local file, the address would be a folder path on this computer, so show the name instead.
+    const SITE_LABEL = location.protocol === 'file:' ? 'Personality Engine' : SITE.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    document.querySelectorAll('.sc-site').forEach(el => { el.textContent = SITE_LABEL; });
+    const responses = [
+      "{u1} and {u2}, you two would be a classic case of {r:Enemies to Lovers}. Fighting is your middle name. And your first. And your last. Boy, you guys love to fight. Honestly, in this scenario, I don't even think it'd just be with each other; both of you could start a fight with a brick wall.",
+      "{u1} and {u2}, your dynamic would be a\u2026 {r:Crack Fic}. If you two buddied up, nobody would take you seriously. Not even yourselves.",
+      "{u1} and {u2}, you two would be a {r:Fix-It Fic}. Primarily because you'd constantly be trying to fix your connection. Sometimes, 'It' just isn't there.",
+      "{u1} and {u2}, you two would be a {r:Trilogy}. Mostly because your connection would be thorough and long-lasting, but also because you guys talk a lot.",
+      "{u1} and {u2}, you guys would be a {r:Drabble}. You'd hit off hard and then burn out just as quickly.",
+      "{u1} and {u2}, you two would be a {r:Happy Ending!} Wow, you're compatible. Welcome to a connection of rainbow and sunshine.",
+      "{u1} and {u2}, you two would be {r:Hurt/Comfort}. On your own, the two of you loooove to get into trouble (usually of the self-damning variety). Together, you'd face your own hardships\u2014whether individually or mutually inflicted\u2014but because you're both sappy and lovey-dovey (admit it), it'd all be worth it in the end.",
+      "{u1} and {u2}, you two would be a {r:Sad Ending}. Like\u2026 the sort of ending that'd make both of you distraught, forever. There'd be no getting over it. Ever. Roll the dice!",
+      "{u1} and {u2}, you two would be {r:Hurt/Comfort but They're Both The Problem}. Enough said.",
+      "{u1} and {u2}, you two would be {r:Friends to Lovers}. Sometimes, the chemistry is so 'there' that it doesn't take a crazy, out-of-the-box dynamic. This would be that.",
+      "{u1} and {u2}, you two would be {r:Unrequited Love}. Do with that what you will. I hope one of you doesn't have something to say.",
+      "{u1} and {u2}, you two would be a {r:Love Triangle}. Come on. There'd be another person in your duo. Who is it?",
+      "{u1} and {u2}, you two would be {r:One-Sided Pining}. This is purely speculative, of course\u2026 but who's biting their tongue?",
+      "{u1} and {u2}, you two would be {r:Mutual Pining}. Gosh, you two would really ruffle up everyone around you. Just get on with it!",
+      "{u1} and {u2}, you two would be {r:Morally Grey Characters}. Enough said.",
+      "{u1} and {u2}, you two would be {r:Fluff}. Your connection would be easy and natural.",
+      "{u1} and {u2}, you two would be {r:Jealousy, Possessiveness, & Protectiveness}. A little unhealthy, perhaps.",
+      "{u1} and {u2}, you two would be a {r:Slow Burn Epic}. Your chemistry would be so there that there's just too darn much to write about.",
+      "{u1} and {u2}, you two would be {r:Forbidden Love}. So, a connection that's\u2026 angsty and intense.",
+      "{u1} and {u2}, you two would be {r:Betrayal}. Yikes.",
+      "{u1} and {u2}, you two would be {r:Slice of Life}. Everything's easy and nothing's hard. Your connection would be a good one.",
+      "{u1} and {u2}, you two would be {r:Angst}. Can we please be normal about something for once? No? Figured.",
+      "{u1} and {u2}, you two would be {r:Angst Without a Happy Ending}. Your connection would be tumultuous. It'd end the same way.",
+      "{u1} and {u2}, you two would be {r:Star-Crossed Lovers}. What a story you'd make. Can I watch?",
+      "{u1} and {u2}, you two would be {r:Unreliable Narrator(s)}. Unfortunately, you're both gossips. Trust would falter in your connection.",
+      "{u1} and {u2}, you two would be {r:Mental Health Issues}. I'm not sure this one has to be explained.",
+      "{u1} and {u2}, you two would be {r:Supernatural Elements}. Your connection would look fun and quirky. You're both also anxiety-ridden. Sorry.",
+      "{u1} and {u2}, you two would be {r:Drugs}. Your connection would be erratic and unpredictable. Not in the fun way, either.",
+      "{u1} and {u2}, you two would be {r:Time Travelling}. Your connection would be rock-solid, cats. You guys would share a bond so strong that it'd make you want to re-wire time just to spend one more second together.",
+      "{u1}, you'd be a {r:Black Cat}. Naturally, {u2}, you're the {r:Golden Retriever}.",
+      "{u1} and {u2}, you'd be {r:Height Difference}. {u1}, you're {r:Tall}. {u2}, you're {r:Short}.",
+      "{u1} and {u2}, you'd be {r:Comfort No Hurt}. Your connection would serve you both well; it'd leave a positive influence on both of your lives.",
+      "{u1} and {u2}, you'd be a {r:Bittersweet Ending}. You two would have a good run. Your connection would be good. Really good. But it doesn't last, and you'd both be sad to see it go. Unfortunately, sometimes 'the end' is for the best.",
+      "{u1}, you'd be a {r:Smartass}. {u2}, you'd be a {r:Himbo}.",
+      "{u1} and {u2}, you'd be {r:Touch Starved}. You'd have moments where you'd both feel inadequate in your connection.",
+      "{u1} and {u2}, you'd be {r:Emotionally Constipated/Repressed}. Am I tapping into something, here?",
+      "{u1} and {u2}, you'd be {r:Obsessed in an Unhealthy Way}. Hello, toxicity!",
+      "{u1} and {u2}, you'd be {r:Obsessed in a Healthy Way}. When I say 'healthy', I mean it very lightly.",
+      "{u1}, you'd be {r:The Grumpy One}. {u2}, you'd be {r:The Sunshine One}.",
+      "{u1}, you'd be {r:Pining}. {u2}, you'd experience {r:Unrequited Feelings}.",
+      "{u1} and {u2}, you'd be {r:Home is a Person, Not a Place}. I hope neither of you like setting things on fire, but I'm kinda getting the vibe that one of you might.",
+      "{u1} and {u2}, you'd be {r:There's Only One Bed}. Your connection would be a thrill-ride. Oh, and also, don't end up in a room with only one bed (unless\u2026)",
+      "{u1}, you'd be a {r:Good Boy}. {u2}, you'd be a {r:Bad Influence}.",
+      "{u1} and {u2}, you'd be the age-old {r:Nerd/Jock} dynamic. {u2}, you'd be prancing around in your fancy get-up, shoving {u1} into lockers and trash cans.",
+      "Well, this one is obvious. {u2}, you're a {r:Disaster}. {u1}, you're {r:The Responsible One}. Good luck.",
+      "{u1} and {u2}, you two would be {r:Unresolved Sexual Tension}. Maybe I'm tapping into something.",
+      "{u1} and {u2}, you two would be {r:Identity Crisis}. Your connection would be\u2026 super confusing. Proceed with caution.",
+      "{u1} and {u2}, you two would be {r:We Don't Talk About That Night}. But everyone else would. There would be a lot of secrecy and potentially shame surrounding your connection.",
+      "{u1}, {r:You Fell First}. {u2}, {r:You Fell Harder}.",
+      "{u2}, you'd be {r:An Aggressive Flirter}. {u1}, you {r:Wouldn't Realize They're Being Flirted At}.",
+      "{u1} and {u2}, you'd be {r:Reluctant Allies}. Something about your connection wouldn't come easy.",
+      "{u1} and {u2}, you'd be a {r:Texting Fic}. Everyone would be begging you two to have a real conversation, face-to-face. To touch grass. Am I tapping into something?"
+    ];
+
+    function render(template, u1, u2) {
+      return template
+        .replace(/\{u1\}/g, '<span class="username">@' + u1 + '</span>')
+        .replace(/\{u2\}/g, '<span class="username">@' + u2 + '</span>')
+        .replace(/\{r:([^}]+)\}/g, '<span class="keyword">$1</span>');
+    }
+
+    function renderCard(template, u1, u2) {
+      return template
+        .replace(/\{u1\}/g, '<span class="sc-user">@' + u1 + '</span>')
+        .replace(/\{u2\}/g, '<span class="sc-user">@' + u2 + '</span>')
+        .replace(/\{r:([^}]+)\}/g, '<span class="sc-kw">$1</span>');
+    }
+
+    function analyze() {
+      const u1 = document.getElementById('user1').value.trim().replace(/^@/, '').toLowerCase();
+      const u2 = document.getElementById('user2').value.trim().replace(/^@/, '').toLowerCase();
+      if (!u1 || !u2) return;
+      const result = document.getElementById('result');
+      result.className = 'result';
+      const combined = [u1, u2].sort().join('+');
+      const template = responses[hash(combined) % responses.length];
+      const plain = template.replace(/\{u1\}/g, '@' + u1).replace(/\{u2\}/g, '@' + u2).replace(/\{r:([^}]+)\}/g, '$1');
+      document.getElementById('resultUsers').innerHTML = '<span style="font-weight:700;">@' + u1 + '</span> & <span style="font-weight:700;">@' + u2 + '</span>';
+      document.getElementById('verdictText').innerHTML = render(template, u1, u2);
+      document.getElementById('sc-question').innerHTML = 'Which trope are <span class="sc-user">@' + u1 + '</span> & <span class="sc-user">@' + u2 + '</span>?';
+      document.getElementById('sc-verdict').innerHTML = renderCard(template, u1, u2);
+      const shareText = plain + ' ' + SITE + 'fictrope.html';
+      document.getElementById('shareBtn').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
+      document.getElementById('shareBtn').classList.add('show');
+      document.getElementById('saveBtn').classList.add('show');
+      result.className = 'result show';
+    }
+
+    function saveCard() {
+      html2canvas(document.getElementById('share-card'), { scale: 2, useCORS: true, backgroundColor: '#f5f0e8' }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'personality-engine-dynamic.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>

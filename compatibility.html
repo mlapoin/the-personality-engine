@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics: replace G-XXXXXXXXXX with your own measurement ID, or delete this block -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <meta charset="UTF-8" />
+  <meta property="og:site_name" content="Personality Engine" />
+  <meta property="og:image" content="preview.jpg" />
+  <meta property="twitter:image" content="preview.jpg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta name="description" content="Are you two compatible? Enter two X usernames. Find out." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compatibility — Personality Engine</title>
+  <meta property="og:title" content="Compatibility — Personality Engine" />
+  <meta property="og:description" content="Are you two compatible? Enter two usernames. Find out." />
+  <meta name="twitter:title" content="Compatibility — Personality Engine" />
+  <meta name="twitter:description" content="Are you two compatible? Enter two usernames. Find out." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23c0001a%22/></svg>" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f5f0e8; color: #111; font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1.25rem; }
+    .container { width: 100%; max-width: 540px; display: flex; flex-direction: column; text-align: center; }
+    .masthead { border-top: 4px solid #111; border-bottom: 1.5px solid #111; padding: 0.6rem 0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .masthead-left { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: #555; letter-spacing: 0.1em; }
+    .masthead-right { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: #111; letter-spacing: 0.1em; text-decoration: none; border: 1px solid #111; padding: 3px 8px; }
+    .masthead-right:hover { color: #c0001a; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 10vw, 5rem); font-weight: 900; line-height: 0.88; letter-spacing: -0.02em; color: #111; border-bottom: 1.5px solid #111; padding-bottom: 1rem; margin-bottom: 1rem; }
+    h1 em { font-style: italic; }
+    .deck { font-size: 0.8rem; color: #444; border-bottom: 1px solid #ccc; padding-bottom: 1rem; margin-bottom: 1.25rem; line-height: 1.5; }
+    .input-area { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; align-items: center; }
+    .input-row { display: flex; width: 100%; }
+    .at-sign { background: #111; color: #f5f0e8; font-family: 'DM Mono', monospace; font-size: 1rem; padding: 0 0.75rem; display: flex; align-items: center; border: 2px solid #111; }
+    input { flex: 1; background: white; border: 2px solid #111; border-left: none; outline: none; color: #111; font-family: 'DM Mono', monospace; font-size: 1rem; padding: 0.85rem 1rem; }
+    input::placeholder { color: #aaa; }
+    .input-area button { width: 100%; background: #111; color: #f5f0e8; border: 2px solid #111; font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 900; font-style: normal; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.9rem; cursor: pointer; transition: background 0.15s; }
+    .input-area button:hover { background: #333; }
+    .input-area button:active { background: #555; }
+    .btn-row { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-top: 1.75rem; }
+    .result { display: none; flex-direction: column; gap: 1.25rem; animation: fadeIn 0.3s ease both; border-top: 4px solid #111; padding-top: 1.25rem; }
+    .result.show { display: flex; }
+    .result-byline { font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700; color: #111; line-height: 1.5; }
+    .result-byline .handle { color: #c0001a; }
+    .bar-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+    .bar-track { width: 100%; height: 40px; background: #ddd; overflow: hidden; }
+    .bar-fill { height: 100%; width: 0%; background: #111; transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+    .percent-label { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 500; color: #111; letter-spacing: 0.05em; }
+    .share-btn { display: none; background: #1d9bf0; color: white; border: none; font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.7rem 1.1rem; cursor: pointer; transition: background 0.15s; text-decoration: none; }
+    .share-btn:hover { background: #1a8cd8; }
+    .share-btn.show { display: inline-block; }
+    .save-btn { display: none; background: #111; color: #f5f0e8; border: none; font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.7rem 1.1rem; cursor: pointer; transition: background 0.15s; }
+    .save-btn:hover { background: #333; }
+    .save-btn.show { display: inline-block; }
+    footer { margin-top: 1.25rem; border-top: 1px solid #ccc; padding-top: 0.75rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #aaa; letter-spacing: 0.08em; display: flex; justify-content: space-between; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    #share-card { position: fixed; left: -9999px; top: 0; width: 540px; background: #f5f0e8; padding: 2rem 1.5rem; }
+    #share-card .sc-masthead { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+    #share-card .sc-masthead .sc-rule { flex: 1; height: 1px; background: #111; }
+    #share-card .sc-masthead span { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: #111; letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; }
+    #share-card .sc-body { border-top: 4px solid #111; padding-top: 1rem; }
+    #share-card .sc-byline { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; color: #111; margin-bottom: 0.75rem; line-height: 1.5; }
+    #share-card .sc-byline .sc-handle { color: #c0001a; }
+    #share-card .sc-pct { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: #111; letter-spacing: 0.05em; margin-top: 0.5rem; }
+    #share-card .sc-footer { margin-top: 1.5rem; border-top: 1px solid #ccc; padding-top: 0.6rem; display: flex; justify-content: space-between; }
+    #share-card .sc-footer span { font-family: 'DM Mono', monospace; font-size: 8px; color: #aaa; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="masthead">
+      <span class="masthead-left">EST. 2026</span>
+      <a class="masthead-right" href="index.html">← ALL TESTS</a>
+    </div>
+    <h1>What's Your<br><em>Compatibility?</em></h1>
+    <p class="deck">Enter two X usernames. Let's find out if you two cats have any chemistry.</p>
+    <div class="input-area">
+      <div class="input-row">
+        <span class="at-sign">@</span>
+        <input type="text" id="user1" placeholder="username" maxlength="30" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="input-row">
+        <span class="at-sign">@</span>
+        <input type="text" id="user2" placeholder="username" maxlength="30" autocomplete="off" spellcheck="false" />
+      </div>
+      <button onclick="analyze()">Find Out</button>
+    </div>
+    <div class="result" id="result">
+      <div class="result-byline"><span id="resultUsers"></span> are...</div>
+      <div class="bar-wrap">
+        <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+        <div class="percent-label" id="percentLabel"></div>
+      </div>
+      <div class="btn-row">
+        <a class="share-btn" id="shareBtn" href="#" target="_blank">Share on X →</a>
+        <button class="save-btn" id="saveBtn" onclick="saveCard()">Save as Image ↓</button>
+      </div>
+    </div>
+    <footer><span>© 2026</span><span>NOT AFFILIATED WITH X/TWITTER</span></footer>
+  </div>
+  <div id="share-card">
+    <div class="sc-masthead"><div class="sc-rule"></div><span>Personality Engine</span><div class="sc-rule"></div></div>
+    <div class="sc-body">
+      <div class="sc-byline" id="sc-byline"></div>
+      <div class="sc-pct" id="sc-pct"></div>
+    </div>
+    <div class="sc-footer"><span>© 2026</span><span class="sc-site"></span></div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    function hash(str) { let h = 0; for (let i = 0; i < str.length; i++) { h = Math.imul(31, h) + str.charCodeAt(i) | 0; } return Math.abs(h); }
+    // Site address for share links and the saved image, so nothing is hard-coded
+    const SITE = location.origin + location.pathname.replace(/[^/]*$/, '');
+    // Opened as a local file, the address would be a folder path on this computer, so show the name instead.
+    const SITE_LABEL = location.protocol === 'file:' ? 'Personality Engine' : SITE.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    document.querySelectorAll('.sc-site').forEach(el => { el.textContent = SITE_LABEL; });
+    function analyze() {
+      const u1 = document.getElementById('user1').value.trim().replace(/^@/, '').toLowerCase();
+      const u2 = document.getElementById('user2').value.trim().replace(/^@/, '').toLowerCase();
+      if (!u1 || !u2) return;
+      const combined = [u1, u2].sort().join('+');
+      const pct = 1 + (hash(combined) % 99);
+      const result = document.getElementById('result');
+      result.className = 'result';
+      document.getElementById('resultUsers').innerHTML = '<span class="handle">@' + u1 + '</span> & <span class="handle">@' + u2 + '</span>';
+      document.getElementById('percentLabel').textContent = pct + '% compatible';
+      document.getElementById('sc-byline').innerHTML = '<span class="sc-handle">@' + u1 + '</span> & <span class="sc-handle">@' + u2 + '</span> are...';
+      document.getElementById('sc-pct').textContent = pct + '% compatible';
+      const shareText = '@' + u1 + ' & @' + u2 + ' are ' + pct + '% compatible. ' + SITE;
+      const shareBtn = document.getElementById('shareBtn');
+      shareBtn.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
+      shareBtn.classList.add('show');
+      document.getElementById('saveBtn').classList.add('show');
+      result.className = 'result show';
+      setTimeout(() => { document.getElementById('barFill').style.width = pct + '%'; }, 50);
+    }
+    function saveCard() {
+      html2canvas(document.getElementById('share-card'), { scale: 2, useCORS: true, backgroundColor: '#f5f0e8' }).then(canvas => {
+        const link = document.createElement('a'); link.download = 'personality-engine-compatibility.png'; link.href = canvas.toDataURL('image/png'); link.click();
+      });
+    }
+    document.getElementById('user1').addEventListener('keydown', e => { if (e.key === 'Enter') analyze(); });
+    document.getElementById('user2').addEventListener('keydown', e => { if (e.key === 'Enter') analyze(); });
+  </script>
+</body>
+</html>
